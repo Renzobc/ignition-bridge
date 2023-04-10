@@ -1,0 +1,8 @@
+services:
+  image_test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runner
+    network_mode: host
+    container_name: test_template_image

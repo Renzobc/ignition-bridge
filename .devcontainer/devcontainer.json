@@ -1,0 +1,47 @@
+{
+	"dockerFile": "../Dockerfile",
+	"build": {
+		"args": {
+			"WORKSPACE": "${containerWorkspaceFolder}"
+		},
+		"target": "developer"
+	},
+	"remoteUser": "rnz",
+	"runArgs": [
+		"--network=bridge",
+		"--pid=host",
+		"--volume=/dev/shm:/dev/shm",
+		"--cap-add=SYS_PTRACE",
+		"--security-opt=seccomp:unconfined",
+		"--security-opt=apparmor:unconfined",
+		"--volume=/tmp/.X11-unix:/tmp/.X11-unix"
+	],
+	"containerEnv": {
+		// "DISPLAY": "${localEnv:DISPLAY}",
+		// "RMW_IMPLEMENTATION": "rmw_fastrtps_cpp"
+	},
+	// Set *default* container specific settings.json values on container create.
+	"settings": {
+		"terminal.integrated.profiles.linux": {
+			"bash": {
+				"path": "bash"
+			},
+		},
+		"terminal.integrated.defaultProfile.linux": "bash"
+	},
+	"extensions": [
+		"dotjoshjohnson.xml",
+		"zachflower.uncrustify",
+		"ms-azuretools.vscode-docker",
+		"ms-python.python",
+		"ms-python.vscode-pylance",
+		"ms-vscode.cpptools",
+		"redhat.vscode-yaml",
+		"twxs.cmake",
+		"yzhang.markdown-all-in-one",
+		"gruntfuggly.todo-tree",
+		"ymotongpoo.licenser",
+		"himanoa.Python-autopep8",
+		"cschlosser.doxdocgen"
+	]
+}
