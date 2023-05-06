@@ -1,3 +1,4 @@
-/project_folder/build/*
 .vscode/*
-*.cmake
+install/
+log/*
+build/

@@ -8,8 +8,9 @@
 	},
 	"remoteUser": "rnz",
 	"runArgs": [
-		"--network=bridge",
-		"--pid=host",
+		"--network=host",
+		"--privileged=true",
+		// "--pid=host",
 		"--volume=/dev/shm:/dev/shm",
 		"--cap-add=SYS_PTRACE",
 		"--security-opt=seccomp:unconfined",
@@ -17,8 +18,11 @@
 		"--volume=/tmp/.X11-unix:/tmp/.X11-unix"
 	],
 	"containerEnv": {
-		// "DISPLAY": "${localEnv:DISPLAY}",
-		// "RMW_IMPLEMENTATION": "rmw_fastrtps_cpp"
+		"DISPLAY": "${localEnv:DISPLAY}",
+		"RMW_IMPLEMENTATION": "rmw_fastrtps_cpp",
+		"DISPLAY": ":0",
+		"XAUTHORITY": "/run/user/1000/.mutter-Xwaylandauth.PCMQQ1",
+		"QT_X11_NO_MITSHM": 1
 	},
 	// Set *default* container specific settings.json values on container create.
 	"settings": {

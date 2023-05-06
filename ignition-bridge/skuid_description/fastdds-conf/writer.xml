@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dds>
+    <log>
+        <use_default>FALSE</use_default>
+        <consumer>
+            <class>FileConsumer</class>
+            <property>
+                <name>filename</name>
+                <value>fastdds_log_datawriter.log</value>
+            </property>
+            <property>
+                <name>append</name>
+                <value>FALSE</value>
+            </property>
+        </consumer>
+    </log>
+    <profiles xmlns="http://www.eprosima.com/XMLSchemas/fastRTPS_Profiles">
+        <participant profile_name="default_profile" is_default_profile="true">
+            <rtps>
+                <name>log_publisher</name>
+                <participantID>10</participantID>
+                <prefix>40.49.53.43.53.45.52.56.45.52.5F.33</prefix>
+                <!-- USER TRAFIC UNICAST LOCATOR -->
+                <defaultUnicastLocatorList>
+                    <locator>
+                        <udpv4>
+                            <port>7400</port>
+                            <address>172.21.0.2</address>
+                        </udpv4>
+                    </locator>
+                    <locator>
+                        <udpv4>
+                            <port>7401</port>
+                            <address>172.21.0.2</address>
+                        </udpv4>
+                    </locator>
+                </defaultUnicastLocatorList>
+                <!-- <builtin>
+                <discovery_config>
+                        <EDP>STATIC</EDP>
+                        <static_edp_xml_config>file:///usr/workspaces/galactic/src/skuid_description/fastdds-conf/static_subscriber.xml</static_edp_xml_config>
+                    </discovery_config>
+                    <initialPeersList>
+                        <locator>
+                            <udpv4>
+                                <port>7502</port>
+                                <address>172.21.0.2</address>
+                            </udpv4>
+                        </locator>
+                    </initialPeersList>
+                DISCOVERY METADATA TRAFICC LOCATOR
+                <metatrafficUnicastLocatorList>
+                        <locator>
+                            <udpv4>
+                                <port>7402</port>
+                                <address>172.21.0.2</address>
+                            </udpv4>
+                        </locator>
+                    </metatrafficUnicastLocatorList>
+                </builtin> -->
+            </rtps>
+        </participant>
+
+        <data_writer profile_name="profile" is_default_profile="true">
+            <historyMemoryPolicy>DYNAMIC</historyMemoryPolicy>
+        </data_writer>
+
+        <data_writer profile_name="/log">
+            <historyMemoryPolicy>DYNAMIC</historyMemoryPolicy>
+            <userDefinedID>101</userDefinedID>
+            <entityID>102</entityID>
+        </data_writer>
+
+        <data_writer profile_name="/log_second">
+            <historyMemoryPolicy>DYNAMIC</historyMemoryPolicy>
+            <userDefinedID>108</userDefinedID>
+            <entityID>109</entityID>
+        </data_writer>
+
+    </profiles>
+</dds>

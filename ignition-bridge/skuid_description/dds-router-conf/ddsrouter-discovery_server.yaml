@@ -1,0 +1,30 @@
+version: v2.0
+
+
+allowlist:
+  - name: rt/log
+    type: std_msgs::msg::dds_::String_
+  - name: rt/log_second
+    type: std_msgs::msg::dds_::String_
+
+
+participants:
+
+# Subscribes to all the topics in the allow list in the domain.
+  - name: SimpleRos2
+    kind: local
+    domain: 0
+
+# Discovery Server
+
+  - name: ServerRos2
+    kind: local-discovery-server
+    discovery-server-guid:
+      ros-discovery-server: true
+      id: 1
+    listening-addresses:
+      - domain: localhost
+        port: 11888
+
+
+# Once the dds router is running, messages from the talker in domain 0 will be forwarded by the router to the listener

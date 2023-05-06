@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dds>
+    <log>
+        <use_default>FALSE</use_default>
+        <consumer>
+            <class>FileConsumer</class>
+            <property>
+                <name>filename</name>
+                <value>fastdds_log_dataReader.log</value>
+            </property>
+            <property>
+                <name>append</name>
+                <value>FALSE</value>
+            </property>
+        </consumer>
+    </log>
+    <profiles xmlns="http://www.eprosima.com/XMLSchemas/fastRTPS_Profiles">
+        <participant profile_name="/" is_default_profile="true">
+            <domainId>2</domainId>
+            <rtps>
+                <name>log_subscriber</name>
+                <participantID>5</participantID>
+                <prefix>45.49.53.43.53.45.52.56.45.52.5F.33</prefix>
+                <!-- USER DATA TRAFFIC -->
+                <!-- <defaultUnicastLocatorList>
+                    <locator>
+                        <udpv4>
+                            <port>7500</port>
+                            <address>172.21.0.2</address>
+                        </udpv4>
+                    </locator>
+                    <locator>
+                        <udpv4>
+                            <port>7501</port>
+                            <address>172.21.0.2</address>
+                        </udpv4>
+                    </locator>
+                </defaultUnicastLocatorList> -->
+                <!-- <builtin>
+                <discovery_config>
+                        <EDP>STATIC</EDP>
+                        <static_edp_xml_config>file:///usr/workspaces/galactic/src/skuid_description/fastdds-conf/static_publisher.xml</static_edp_xml_config>
+                        <initialAnnouncements>
+                            <count>3</count>
+                            <period>
+                                <sec>1</sec>
+                            </period>
+                        </initialAnnouncements>
+                    </discovery_config>
+                    <initialPeersList>
+                        <locator>
+                            <udpv4>
+                                <port>7402</port>
+                                <address>172.21.0.2</address>
+                            </udpv4>
+                        </locator>
+                    </initialPeersList>
+                <metatrafficUnicastLocatorList>
+                        <locator>
+                            <udpv4>
+                                <port>7502</port>
+                                <address>172.21.0.2</address>
+                            </udpv4>
+                        </locator>
+                    </metatrafficUnicastLocatorList>
+                </builtin> -->
+            </rtps>
+        </participant>
+
+        <data_writer profile_name="profile" is_default_profile="true">
+            <historyMemoryPolicy>DYNAMIC</historyMemoryPolicy>
+        </data_writer>
+
+        <data_reader profile_name="/log">
+            <historyMemoryPolicy>DYNAMIC</historyMemoryPolicy>
+            <userDefinedID>103</userDefinedID>
+            <entityID>104</entityID>
+        </data_reader>
+
+        <data_reader profile_name="/log_second">
+            <historyMemoryPolicy>DYNAMIC</historyMemoryPolicy>
+            <userDefinedID>106</userDefinedID>
+            <entityID>107</entityID>
+        </data_reader>
+
+    </profiles>
+</dds>

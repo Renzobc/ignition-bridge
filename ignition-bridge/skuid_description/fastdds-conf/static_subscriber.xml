@@ -1,0 +1,20 @@
+<staticdiscovery>
+	<participant>
+		<name>log_subscriber</name>
+		<reader>
+			<userId>103</userId>
+			<topicName>rt/log</topicName>
+			<topicDataType>std_msgs::msg::dds_::String_</topicDataType>
+			<topicKind>NO_KEY</topicKind>
+			<!-- <reliabilityQos>RELIABLE_RELIABILITY_QOS</reliabilityQos> -->
+		</reader>
+
+		<reader>
+			<userId>106</userId>
+			<topicName>rt/log_second</topicName>
+			<topicDataType>std_msgs::msg::dds_::String_</topicDataType>
+			<topicKind>NO_KEY</topicKind>
+			<!-- <reliabilityQos>RELIABLE_RELIABILITY_QOS</reliabilityQos> -->
+		</reader>
+	</participant>
+</staticdiscovery>

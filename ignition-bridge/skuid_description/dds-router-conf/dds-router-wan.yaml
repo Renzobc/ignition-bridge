@@ -1,0 +1,47 @@
+version: v2.0
+
+
+allowlist:
+  - name: rt/log
+    type: std_msgs::msg::dds_::String_
+  - name: rt/log_second
+    type: std_msgs::msg::dds_::String_
+
+
+
+participants:
+
+# Subscribes to all the topics in the allow list in the domain.
+  - name: SimpleRos2
+    kind: local
+    domain: 0
+
+
+# WAN SERVER
+
+# THIS PARTICIPANT WILL SUBSCRIBE TO THE TOPIC IN THE ALLOWLIST USING THE DISCOVERY SERVER PROTOCOL
+  - name: WANServer
+    kind: wan
+    discovery-server-guid:
+      ros-discovery-server: true
+      id: 0
+    # In this listening address will expect data from the WAN client.   
+    listening-addresses:
+      - ip: 1.1.1.1
+        port: 11666
+        transport: udp
+
+# CLIENT CONFIGURATION
+  # - name: WANCLient
+  #   kind: wan
+  #   discovery-server-guid:
+  #     ros-discovery-server: true
+  #     id: 1
+  #   connection-addresses:
+  #     addresses: 
+  #       - ip: 1.1.1.1
+  #       - port: 11666
+  #   listening-addresses:
+  #     - ip: 2.2.2.2
+  #       port: 11670
+  #       transport: udp

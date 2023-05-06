@@ -1,0 +1,19 @@
+version: v2.0
+
+allowlist:
+  - name: rt/log
+    type: std_msgs::msg::dds_::String_
+  - name: rt/log_second
+    type: std_msgs::msg::dds_::String_
+
+    # WILL LISTEN TO THE ALLOWLIST TOPIC IN THE SPECIFIED DOMAIN
+participants:
+  - name: SimplePArticipant_domain0
+    kind: local
+    domain: 0
+
+
+    # WILL LISTEN TO THE ALLOWLIST TOPIC IN THE SPECIFIED DOMAIN
+  - name: SimpleParticipant_domain2
+    kind: local
+    domain: 2

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dds>
+    <log>
+        <use_default>FALSE</use_default>
+        <consumer>
+            <class>FileConsumer</class>
+            <property>
+                <name>filename</name>
+                <value>fastdds_log_default.log</value>
+            </property>
+            <property>
+                <name>append</name>
+                <value>FALSE</value>
+            </property>
+        </consumer>
+    </log>
+
+    <profiles xmlns="http://www.eprosima.com/XMLSchemas/fastRTPS_Profiles">
+        <participant profile_name="/" is_default_profile="true">
+            <domainId>2</domainId>
+            <rtps>
+                <name>default_profile</name>
+                <builtin>
+                    <discovery_config>
+                        <EDP>SIMPLE</EDP>
+                    </discovery_config>
+                </builtin>
+            </rtps>
+            <!-- <rtps>
+                <name>log_monitor</name>
+                <participantID>7</participantID>
+                <prefix>49.49.53.43.53.45.52.56.45.52.5F.33</prefix>
+                <builtin>
+                    <discovery_config>
+                        <EDP>STATIC</EDP>
+                        <static_edp_xml_config>file:///conf/static_endpoints.xml</static_edp_xml_config>
+                    </discovery_config>
+                    DomainParticipant will use in the unicast discovery mechanism
+                    <initialPeersList>
+                        <locator>
+                            <udpv4>
+                                <port>7402</port>
+                                <address>172.21.0.2</address>
+                            </udpv4>
+                        </locator>
+                        <locator>
+                            <udpv4>
+                                <port>7502</port>
+                                <address>172.21.0.2</address>
+                            </udpv4>
+                        </locator>
+                    </initialPeersList>
+                </builtin>
+            </rtps> -->
+        </participant>
+
+        <data_writer profile_name="profile_writer" is_default_profile="true">
+            <historyMemoryPolicy>DYNAMIC</historyMemoryPolicy>
+        </data_writer>
+
+        <data_reader profile_name="profile_reader" is_default_profile="true">
+            <historyMemoryPolicy>DYNAMIC</historyMemoryPolicy>
+        </data_reader>
+
+    </profiles>
+</dds>

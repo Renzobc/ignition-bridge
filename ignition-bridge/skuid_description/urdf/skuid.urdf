@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='ASCII'?>
+
+<robot name="skuid" xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- BASE -->
+  <link name="base_link">
+    <origin relative_to="world" xyz="0 0 0" rpy="0 0 0"/>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 1.57"></origin>
+      <geometry>
+        <mesh filename="package://skuid_description/meshes/base/skuid_base.dae" />
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="imu_link">
+    <origin relative_to="base_link" xyz="0.15 0 0.25" rpy="0 0 0"></origin>
+  </link>
+
+  <joint name="imu_link_joint" type="fixed">
+    <child link="imu_link" />
+    <parent link="base_link" />
+    <origin xyz="0.15 0 0.25" rpy="0 0 0" />
+  </joint>
+
+  <!-- SENSORS -->
+
+  <link name="camera_front">
+    <origin relative_to="base_link" xyz="0.85 0 0.125" rpy="0 0 0"></origin>
+  </link>
+
+  <joint name="camera_front_joint" type="fixed">
+    <child link="camera_front" />
+    <parent link="base_link" />
+    <origin relative_to="base_link" xyz="0.85 0 0.125" rpy="0 0 0" />
+  </joint>
+
+  <link name="camera_back">
+    <origin relative_to="base_link" xyz="-0.5 0 0.175" rpy="0 0 3.14"></origin>
+  </link>
+
+  <joint name="camera_back_joint" type="fixed">
+    <child link="camera_back" />
+    <parent link="base_link" />
+    <origin relative_to="base_link" xyz="-0.5 0 0.175" rpy="0 0 3.14"></origin>
+  </joint>
+
+  <link name="scan">
+    <origin relative_to="base_link" xyz="0 0 0.4" rpy="0 0 0"></origin>
+  </link>
+
+  <joint name="scan_joint" type="fixed">
+    <child link="scan" />
+    <parent link="base_link" />
+    <origin relative_to="base_link" xyz="0 0 0.4" rpy="0 0 0"></origin>
+  </joint>
+
+  <!-- WHEELS -->
+
+  <!-- <link name="wheel_left_front">
+    <origin relative_to="base_link" xyz="0.625 0.6 0" rpy="-1.57 0 0"></origin>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57 0 0"></origin>
+      <geometry>
+        <mesh filename="package://skuid_description/meshes/wheel/tyre.dae" scale="0.3 0.35 0.3"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="wheel_left_front_joint" type="continuous">
+    <origin relative_to="base_link" xyz="0.625 0.6 0" rpy="-1.57 0 0"></origin>
+    <child link="wheel_left_front"></child>
+    <parent link="base_link"></parent>
+    <axis xyz="0 0 1" />
+    
+  </joint>
+
+  <link name="wheel_right_front">
+    <origin relative_to="base_link" xyz="0.625 -0.6 0" rpy="-1.57 0 0"></origin>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57 0 0"></origin>
+      <geometry>
+        <mesh filename="package://skuid_description/meshes/wheel/tyre.dae" scale="0.3 0.35 0.3"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="wheel_right_front_joint" type="continuous">
+    <origin relative_to="base_link" xyz="0.625 -0.6 0" rpy="-1.57 0 0"></origin>
+    <child link="wheel_right_front"></child>
+    <parent link="base_link"></parent>
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <link name="wheel_left_back">
+    <origin relative_to="base_link" xyz="-0.625 0.6 0" rpy="-1.57 0 0"></origin>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57 0 0"></origin>
+      <geometry>
+        <mesh filename="package://skuid_description/meshes/wheel/tyre.dae" scale="0.3 0.35 0.3"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="wheel_left_back_joint" type="continuous">
+    <origin relative_to="base_link" xyz="-0.625 0.6 0" rpy="-1.57 0 0"></origin>
+    <child link="wheel_left_back"></child>
+    <parent link="base_link"></parent>
+    <axis xyz="0 0 1" />
+    
+  </joint>
+
+  <link name="wheel_right_back">
+    <origin relative_to="base_link" xyz="-0.625 -0.6 0" rpy="-1.57 0 0"></origin>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57 0 0"></origin>
+      <geometry>
+        <mesh filename="package://skuid_description/meshes/wheel/tyre.dae" scale="0.3 0.35 0.3"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="wheel_right_back_joint" type="continuous">
+    <origin relative_to="base_link" xyz="-0.625 -0.6 0" rpy="-1.57 0 0"></origin>
+    <child link="wheel_right_back"></child>
+    <parent link="base_link"></parent>
+    <axis xyz="0 0 1"></axis>
+  </joint> -->
+
+</robot>
