@@ -4,12 +4,18 @@ services:
       context: .
       dockerfile: Dockerfile
       target: runner
-    network_mode: host
-    privileged: true
     container_name: ignition-bridge
+    network_mode: bridge
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
+      - /run/user/1000/.mutter-Xwaylandauth.UOZ071:/run/user/1000/.mutter-Xwaylandauth.UOZ071
     environment:
-      - DISPLAY=":0",
-      - XAUTHORITY="/run/user/1000/.mutter-Xwaylandauth.PCMQQ1",
+      - DISPLAY=$DISPLAY
+      - XAUTHORITY=/run/user/1000/.mutter-Xwaylandauth.UOZ071
       - QT_X11_NO_MITSHM= 1
+    ports:
+      - 8765:8765
+
+
+    # $ xhost local:root
+    # $ docker run -it --privileged -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix \

@@ -6,22 +6,23 @@
 		},
 		"target": "developer"
 	},
-	"remoteUser": "rnz",
+	"remoteUser": "renzobc",
 	"runArgs": [
-		"--network=host",
+		"--network=container:ignition",
 		"--privileged=true",
-		// "--pid=host",
+		"--pid=host",
+		"--ipc=host",
 		"--volume=/dev/shm:/dev/shm",
 		"--cap-add=SYS_PTRACE",
 		"--security-opt=seccomp:unconfined",
 		"--security-opt=apparmor:unconfined",
-		"--volume=/tmp/.X11-unix:/tmp/.X11-unix"
+		"--volume=/tmp/.X11-unix:/tmp/.X11-unix",
+		"--volume=/run/user/1000/.mutter-Xwaylandauth.UOZ071:/run/user/1000/.mutter-Xwaylandauth.UOZ071"
 	],
 	"containerEnv": {
-		"DISPLAY": "${localEnv:DISPLAY}",
 		"RMW_IMPLEMENTATION": "rmw_fastrtps_cpp",
 		"DISPLAY": ":0",
-		"XAUTHORITY": "/run/user/1000/.mutter-Xwaylandauth.PCMQQ1",
+		"XAUTHORITY": "/run/user/1000/.mutter-Xwaylandauth.UOZ071",
 		"QT_X11_NO_MITSHM": 1
 	},
 	// Set *default* container specific settings.json values on container create.

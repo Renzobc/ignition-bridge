@@ -1,8 +1,5 @@
-from email.policy import default
-from http.server import executable
 from multiprocessing import Condition
 import os
-from unicodedata import name
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
@@ -13,10 +10,9 @@ from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.descriptions import ComposableNode
-
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import PathJoinSubstitution, TextSubstitution
+from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
 
 
 def generate_launch_description():
@@ -26,16 +22,13 @@ def generate_launch_description():
     pkg_share = FindPackageShare(
         package='skuid_description').find('skuid_description')
 
+    pkg_floxglove = FindPackageShare(
+        package='foxglove_bridge').find('foxglove_bridge')
+
     # Path to rviz configuration
 
     default_rviz_config_path = os.path.join(
         pkg_share, 'rviz/rviz_skuid_settings.rviz')
-
-    # default_slam_config_file = os.path.join(
-    #     pkg_share, 'config/slam_toolbox_async_param.yaml')
-
-    # default_costmap_config_file = os.path.join(
-    #     pkg_share, 'config/params_nav2_bringup.yaml')
 
     # Path to the urdf file
 
@@ -49,11 +42,6 @@ def generate_launch_description():
     use_robot_state_pub = LaunchConfiguration('use_robot_state_pub')
     use_rviz = LaunchConfiguration('use_rviz')
     use_sim_time = LaunchConfiguration('use_sim_time')
-    slam_params_file = LaunchConfiguration('slam_params_file')
-    costmap_params_file = LaunchConfiguration('costmap_params_file')
-    autostart = LaunchConfiguration('autostart')
-
-    # use_sim_bridge = LaunchConfiguration('use_sim_bridge')
 
     # Declare launch arguments
 
@@ -62,17 +50,6 @@ def generate_launch_description():
         default_value=default_urdf_model_path,
         description='absolute path to skuid urdf'
     )
-
-    # declare_slam_params_file_cmd = DeclareLaunchArgument(
-    #     'slam_params_file',
-    #     default_value=default_slam_config_file
-    # )
-
-    # declare_costmap_params_file_cmd = DeclareLaunchArgument(
-    #     name='costmap_params_file',
-    #     default_value=default_costmap_config_file,
-    #     description='params file for costmap'
-    # )
 
     declare_rviz_config_file_cmd = DeclareLaunchArgument(
         name='rviz_config_file',
@@ -103,10 +80,6 @@ def generate_launch_description():
         default_value='True',
         description='Use gazebo sim clock if true'
     )
-
-    declare_autostart_cmd = DeclareLaunchArgument(
-        'autostart', default_value='True',
-        description='Automatically startup the nav2 stack of Node lifecycle')
 
     # Specify the actions
 
@@ -139,11 +112,11 @@ def generate_launch_description():
         package='rviz2',
         executable='rviz2',
         name='rviz2',
-        # output='screen',
+        output='screen',
         arguments=['-d', rviz_config_file]
     )
 
-    # se = SetEnvironmentVariable(name='FASTRTPS_DEFAULT_PROFILES_FILE', value='/usr/workspaces/galactic/src/skuid_description/fastdds-conf/FASTDDS_PROFILES_FILE.xml')
+    # set_fastrtps_environment = SetEnvironmentVariable(name='FASTRTPS_DEFAULT_PROFILES_FILE', value='/usr/workspaces/galactic/src/skuid_description/fastdds-conf/FASTDDS_PROFILES_FILE.xml')
 
     ignition_bridge = Node(
         package='ros_ign_bridge',
@@ -194,19 +167,23 @@ def generate_launch_description():
                    "scan", "skuid/scan/scan"]
     )
 
+    floxglove = IncludeLaunchDescription(
+        XMLLaunchDescriptionSource(
+            [os.path.join(pkg_floxglove, 'launch', 'foxglove_bridge_launch.xml')]),
+    )
+
     # Create the launch description and populate
 
     ld = LaunchDescription()
 
     # Declare launch options
-    # ld.add_action(se)
+    # ld.add_action(set_fastrtps_environment)
     ld.add_action(declare_urdf_model_path_cmd)
     ld.add_action(declare_rviz_config_file_cmd)
     ld.add_action(declare_use_joint_state_publisher_cmd)
     ld.add_action(declare_use_robot_state_pub)
     ld.add_action(declare_use_rviz_cmd)
     ld.add_action(declare_use_sim_time_cmd)
-    ld.add_action(declare_autostart_cmd)
 
     # add any actions
     ld.add_action(start_joint_state_publisher)
@@ -214,6 +191,7 @@ def generate_launch_description():
     ld.add_action(static_tf_lidar_to_gpu_lidar)
     ld.add_action(skuid_description_container)
     ld.add_action(ignition_bridge)
+    ld.add_action(floxglove)
     ld.add_action(start_rviz_cmd)
 
     return ld

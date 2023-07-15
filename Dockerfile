@@ -11,6 +11,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
   && apt-get update \
   && apt-get install -y -q --no-install-recommends\
   openssh-server \
+  x11-apps \
   cmake \
   curl \
   wget \
@@ -21,11 +22,13 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
   clang \
   clang-tidy \
   build-essential \
+  python3-colcon-common-extensions \
   dirmngr \
   python3-rosdep \
   python3-pip \
   nano \ 
   git \
+  ros-$ROS_DISTRO-foxglove-bridge \
   ros-$ROS_DISTRO-ros-ign \
   ros-$ROS_DISTRO-launch-testing \
   ros-$ROS_DISTRO-tf-transformations \
@@ -44,6 +47,11 @@ ARG OVERLAY_WS
 ARG ROS_DISTRO
 WORKDIR $OVERLAY_WS
 
+# Set ignition variable for simulation
+ENV IGN_PARTITION=renzobc
+ENV IGNITION_VERSION=fortress
+ENV IGN_VERBOSE=1
+
 
 
 # MAKE THE DEVELOPER VERSION OF THE IMAGE
@@ -55,7 +63,7 @@ ENV TZ=Europe/Copenhagen
 
 ENV RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 
-ARG USERNAME=rnz
+ARG USERNAME=renzobc
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
@@ -113,9 +121,6 @@ COPY --from=cacher $OVERLAY_WS ./
 ARG OVERLAY_MIXINS="release ccache"
 ARG ROS_SETUP
 
-RUN . ${ROS_SETUP} && colcon build 
-
-
 
 # BUILD CURRENT PROJECT WITH COLCON (CMAKE)
 FROM dependencies_setter AS builder
@@ -125,6 +130,7 @@ WORKDIR $OVERLAY_WS
 RUN apt update \
   && apt install -y -q --no-install-recommends \
   clang-tidy \
+  python3-colcon-common-extensions \
   && rm -rf /var/lib/apt/lists/*
 
 
@@ -133,7 +139,7 @@ RUN rm -rf ./build ./install ./log
 
 ARG ROS_SETUP
 
-RUN . ${ROS_SETUP} && colcon build
+RUN . ${ROS_SETUP} && colcon build --packages-select skuid_description
 
 # CMD ["tail", "-f", "/dev/null"]
 
@@ -164,7 +170,8 @@ ENV OVERLAY_WS $OVERLAY_WS
 COPY entrypoint.sh entrypoint.sh 
 RUN chmod +x entrypoint.sh
 
+EXPOSE 8765/tcp
+
 ENTRYPOINT ["bash"]
 CMD [ "entrypoint.sh" ]
-
 

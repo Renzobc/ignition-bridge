@@ -65,7 +65,7 @@ ament_target_dependencies(tf_start_base_link
 rclcpp_components_register_node(tf_start_base_link PLUGIN "skuid::ign_localization_node" EXECUTABLE tf_start_base_link_exec)
 
 install(
-  DIRECTORY launch meshes urdf rviz src config
+  DIRECTORY launch meshes urdf rviz
   DESTINATION share/${PROJECT_NAME}
 )
 
